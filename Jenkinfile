@@ -1,44 +1,37 @@
 pipeline {
     agent any
     tools {
-        // Maven and JDK configuration in Jenkins
-        maven 'Maven_3.8.1'  // Ensure this matches the tool name you configured
-        jdk 'OpenJDK 11'      // Ensure this matches the tool name you configured
+        // Adjust these tool names to the ones configured in Jenkins
+        maven 'VishwasMaven'  // Replace with the correct Maven tool name
+        jdk 'JDK'  // Replace with the correct JDK tool name
     }
     environment {
-        // Set environment variables if needed
-        MAVEN_OPTS = "-Xmx1024m"
+        MAVEN_OPTS = "-Xmx1024m"  // Set Maven options if needed
     }
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from the repository
                 git 'https://github.com/vishwaspw/mavenapp.git'
             }
         }
         stage('Build') {
             steps {
-                // Run the Maven build command
                 sh 'mvn clean install'
             }
         }
         stage('Test') {
             steps {
-                // Run the Maven test command
                 sh 'mvn test'
             }
         }
         stage('Archive') {
             steps {
-                // Archive the build artifacts (e.g., JAR file) if needed
                 archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
             }
         }
         stage('Deploy') {
             steps {
-                // Deployment steps (if any) go here
                 echo 'Deploying application...'
-                // Example: sh 'deploy.sh'
             }
         }
     }
@@ -51,7 +44,6 @@ pipeline {
         }
         always {
             echo 'Cleaning up...'
-            // Any cleanup steps after the pipeline completes
         }
     }
 }
